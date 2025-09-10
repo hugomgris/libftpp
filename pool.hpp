@@ -6,62 +6,61 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 14:31:58 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/10 15:11:44 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:29:17 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef POOL_HPP
 # define POOL_HPP
 
-#include <vector>
-#include <memory>
-#include <stdexcept>
-
-// Forward declaration
-class IntPool;
-
-// The pointer wrapper that users interface with
-class IntPoolObject {
-	private:
-		int *ptr;
-		IntPool *pool;
-		size_t index;
-
-	public:
-		IntPoolObject(int *p, IntPool *owner, size_t idx);
-		~IntPoolObject();
-		
-		// Move constructor/assignment
-		IntPoolObject(IntPoolObject &&other) noexcept;
-		IntPoolObject &operator=(IntPoolObject &&other) noexcept;
-
-		// Deletion of copy constructor/assignment
-		IntPoolObject(const IntPoolObject&) = delete;
-		IntPoolObject &operator=(const IntPoolObject &) = delete;
-
-		int *operator->() { return ptr; }
-		int &operator*() { return *ptr; }
-};
+# include <vector>
+# include <memory>
+# include <stdexcept>
+# include <utility>
 
 // The pool class that manages objects
-class IntPool {
+template <typename TType>
+class Pool {
+	public:
+		// Nested Object class - this is what users get
+		class Object {
+			private:
+				TType *ptr;
+				Pool<TType> *pool;
+				size_t index;
+
+			public:
+				Object(TType *p, Pool<TType> *owner, size_t idx);
+				~Object();
+				
+				// Move constructor/assignment
+				Object(Object &&other) noexcept;
+				Object &operator=(Object &&other) noexcept;
+
+				// Deletion of copy constructor/assignment
+				Object(const Object&) = delete;
+				Object &operator=(const Object &) = delete;
+
+				TType *operator->() { return ptr; }
+				TType &operator*() { return *ptr; }
+		};
+
 	private:
-		std::unique_ptr<int[]> storage;
+		std::unique_ptr<std::byte[]> storage;  // Raw memory, not constructed objects
 		std::vector<size_t> free_indices;
 		size_t capacity;
 
-		friend class IntPoolObject;
-
 	public:
-		IntPool(): capacity(0) {}
-		~IntPool() = default;
+		Pool(): capacity(0) {}
+		~Pool() = default;
 
 		inline void returnObject(size_t index) {
 			free_indices.push_back(index);
 		}
 
-		inline void resize(size_t numberOfObjects) {
-			storage = std::make_unique<int[]>(numberOfObjects);
+		inline void resize(const size_t& numberOfObjects) {
+			// Allocate raw memory, don't construct objects yet
+			storage = std::make_unique<std::byte[]>(numberOfObjects * sizeof(TType));
 			capacity = numberOfObjects;
 
 			free_indices.clear();
@@ -71,7 +70,8 @@ class IntPool {
 			}
 		}
 
-		IntPoolObject acquire(int value) {
+		template<typename... TArgs>
+		Object acquire(TArgs&&... args) {
 			if (free_indices.empty()) {
 				throw std::runtime_error("Pool is empty");
 			}
@@ -79,33 +79,39 @@ class IntPool {
 			size_t index = free_indices.back();
 			free_indices.pop_back();
 
-			new(&storage[index]) int(value);
+			// Get pointer to the raw memory location
+			TType* ptr = reinterpret_cast<TType*>(storage.get() + index * sizeof(TType));
+			new(ptr) TType(std::forward<TArgs>(args)...);
 
-			return IntPoolObject(&storage[index], this, index);
+			return Object(ptr, this, index);
 		}
 };
 
 // Implementation after definition is needed for class interaction
-inline IntPoolObject::IntPoolObject(int *p, IntPool *owner, size_t idx) 
+template <typename TType>
+inline Pool<TType>::Object::Object(TType *p, Pool<TType> *owner, size_t idx) 
 	: ptr(p), pool(owner), index(idx) {}
 
-inline IntPoolObject::~IntPoolObject() {
+template <typename TType>
+inline Pool<TType>::Object::~Object() {
 	if (pool && ptr) {
-		// For int, destructor is trivial, so we can skip explicit call
+		ptr->~TType();
 		pool->returnObject(index);
 	}
 }
 
-inline IntPoolObject::IntPoolObject(IntPoolObject &&other) noexcept 
+template <typename TType>
+inline Pool<TType>::Object::Object(Object &&other) noexcept 
 	: ptr(other.ptr), pool(other.pool), index(other.index) {
 	other.ptr = nullptr;
 	other.pool = nullptr;
 }
 
-inline IntPoolObject &IntPoolObject::operator=(IntPoolObject &&other) noexcept {
+template <typename TType>
+inline typename Pool<TType>::Object &Pool<TType>::Object::operator=(Object &&other) noexcept {
 	if (this != &other) {
 		if (pool && ptr) {
-			// No explicit destructor call needed for int
+			ptr->~TType();
 			pool->returnObject(index);
 		}
 		

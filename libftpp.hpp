@@ -6,10 +6,11 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:54:33 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/10 15:05:36 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:44:47 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 
+#include "colors.h"
 #include "pool.hpp"
