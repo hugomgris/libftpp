@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:54:23 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/16 15:23:39 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:16:36 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,63 @@ void testMemento() {
 	std::cout << "After state restoring: Health=" << player.getHealth() << ", Level=" << player.getLevel() << std::endl;
 }
 
+void testObserver() {
+	/*
+	Lambda function cheatsheet:
+		[&]        // Capture all by reference
+		[=]        // Capture all by copy
+		[&gameOver] // Capture only gameOver by reference
+		[gameOver]  // Capture only gameOver by copy
+		[]         // Capture nothing
+	*/
+	
+	std::cout << YEL << "\n=== Testing Observer Pattern ===" << RESET << std::endl;	
+
+	enum GameEvent { PlayerDied, LevelUp, ItemFound };
+	Observer<GameEvent> basicObserver;
+	Observer<GameEvent, std::string> itemObserver;
+
+	int score = 100;
+	int level = 1;
+	bool gameOver = false;
+	std::vector<std::string> inventory;
+
+	// Multiple callback subscription
+	basicObserver.subscribe(PlayerDied, [&gameOver]() {
+		std::cout << "GAME OVER!!" << std::endl;
+		gameOver = true;
+	});
+
+	basicObserver.subscribe(LevelUp, [&level, &score]() {
+		level++;
+		score += 50;
+		std::cout << "Level up! New level: " << level << ", Score: " << score << std::endl;
+	});
+
+	itemObserver.subscribe(ItemFound, [&inventory](std::string item) {
+		inventory.push_back(item);
+		std::cout << "Found item: " << item << " (Inventory size: " << inventory.size() << ")" << std::endl;
+	});
+
+	basicObserver.subscribe(PlayerDied, [&score](){
+		std::cout << "Final Score: " << score << std::endl;
+	});
+
+	// Event triggering
+	std::cout << "Player finds items..." << std::endl;
+	itemObserver.notify(ItemFound, "Health Potion");
+	itemObserver.notify(ItemFound, "Magic Sword");
+	
+	std::cout << "Player levels up..." << std::endl;
+	basicObserver.notify(LevelUp);
+	
+	std::cout << "Player dies..." << std::endl;
+	basicObserver.notify(PlayerDied);
+	
+	std::cout << "Game Over Status: " << (gameOver ? "true" : "false") << std::endl;
+	std::cout << "Dropped loot size: " << inventory.size() << std::endl;
+}
+
 int main(void) {
 	// Pool tests
 	std::cout << CYN << "====== POOL data structure tests ======" << RESET << std::endl;
@@ -300,6 +357,7 @@ int main(void) {
 
 	std::cout << CYN << "\n====== DESIGN PATTERNS tests ======" << RESET << std::endl;
 	testMemento();
+	testObserver();
 	
 	std::cout << GRN << "\nAll tests completed!" << RESET << std::endl;
 	return 0;
