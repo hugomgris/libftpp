@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:54:23 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/16 16:16:36 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:39:57 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,20 @@
 #include <string>
 #include <vector>
 
-struct SaveData {
-	int health;
-	int level;
-};
-
+// Test class for Memento
 class GameCharacter: public Memento {
 	private:
-		std::string name;	
-		
+		std::string name;			
 		int health;
 		int level;
 
 		// Concrete implementation of virtual methods
 		void _saveToSnapshot(Snapshot &snapshot) const override {
-			SaveData data{health, level};
-			snapshot << data;
+			snapshot << health << level;
 		}
 
 		void _loadFromSnapshot(Snapshot &snapshot) override {
-			SaveData data;
-			snapshot >> data;
-			health = data.health;
-			level = data.level;
+			snapshot >> health >> level;
 		}
 
 	public:
@@ -50,6 +41,46 @@ class GameCharacter: public Memento {
 		void levelUp() { level++; }
 
 };
+
+// Test classes for Singleton
+class GameConfig {
+	friend class Singleton<GameConfig>;
+	private:
+		std::string gameName;
+		int maxPlayers;
+		bool debugMode;
+
+		// Private constructor because only Singleton should be able to create it.
+		GameConfig(const std::string &name, int players, bool debug)
+			: gameName(name), maxPlayers(players), debugMode(debug) {
+				std::cout << "GameConfig created: " << name << ", " << maxPlayers << ", " << debugMode << std::endl;
+			}
+
+	public:
+		// Getters just for testing
+		const std::string &getName() const { return gameName; }
+		int getMaxPlayers() const { return maxPlayers; }
+		bool isDebugMode() const {return debugMode; }
+};
+
+class Logger {
+	friend class Singleton<Logger>;
+	private:
+		std::string logFile;
+		Logger(const std::string &file): logFile(file) {
+			std::cout << "Logger created for file: " << file << std::endl;
+		}
+	public:
+		const std::string &getLogFile() const { return logFile; }
+};
+
+class NotInstantiated {
+	friend class Singleton<NotInstantiated>;
+	private:
+		NotInstantiated() = default;
+};
+
+// TESTS
 
 void testBasicPoolOperations() {
 	std::cout << YEL "\n=== Testing Basic Pool Operations ===" << RESET << RESET << std::endl;
@@ -341,6 +372,80 @@ void testObserver() {
 	std::cout << "Dropped loot size: " << inventory.size() << std::endl;
 }
 
+void testSingleton() {
+	std::cout << YEL << "\n=== Testing Singleton Pattern ===" << RESET << std::endl;
+
+	std::cout << YEL << "\n=== Basic Instantiation Test ===" << RESET << std::endl;
+	try {
+		Singleton<GameConfig>::instantiate("Silksong", 1, true);
+		std::cout << GRN << "First instantiation successful" << RESET << std::endl;
+
+		GameConfig *config = Singleton<GameConfig>::instance();
+		std::cout << "Game: " << config->getName() << ", Players: " << config->getMaxPlayers() << ", Debug: " << (config->isDebugMode() ? "True" : "False") << std::endl;
+		std::cout << GRN << "Instance retrieve successful" << RESET << std::endl;
+	} catch (const std::exception &e) {
+		std::cout << RED << "Caught exception: " << e.what() << RESET << std::endl;
+	}
+
+	std::cout << YEL << "\n=== Multiple instance() calls test ===" << RESET << std::endl;
+	try {
+		GameConfig *config1 = Singleton<GameConfig>::instance();
+		GameConfig *config2 = Singleton<GameConfig>::instance();
+
+		if (config1 == config2) {
+			std::cout << GRN << "Multiple instance() calls return same object" << RESET << std::endl;
+			std::cout << "Address 1: " << config1 << ", Address 2: " << config2 << std::endl;
+		} else {
+			std::cout << RED << "Different objects returned!" << RESET << std::endl;
+		}
+	} catch (const std::exception &e) {
+		std::cout << RED << "Caught exception: " << e.what() << RESET << std::endl;
+	}
+
+	std::cout << YEL << "\n=== Double instantiation test ===" << RESET << std::endl;
+	try {
+		Singleton<GameConfig>::instantiate("Silksong 2", 2, false);
+		std::cout << RED << "Double instantiation s hould have thrown, you should never see this" << RESET << std::endl;
+	} catch (const SingletonException &e) {
+		std::cout << GRN << "Correctly threw SingletonException: " << e.what() << RESET << std::endl;
+	} catch (const std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+
+	std::cout << YEL << "\n=== Different types test ===" << RESET << std::endl;
+	try {
+		Singleton<Logger>::instantiate("game.log");
+		Logger *logger = Singleton<Logger>::instance();
+		std::cout << GRN "Different singleton type works: " << logger->getLogFile() << RESET << std::endl;
+
+		//Independence verification
+		GameConfig *config = Singleton<GameConfig>::instance();
+		std::cout << "GameConfig still accessible: " << config->getName() << std::endl;
+	} catch (const std::exception &e) {
+		std::cout << RED << "Caught exception: " << e.what() << RESET << std::endl;
+	}
+
+	std::cout << YEL << "\n=== Double instantiation test ===" << RESET << std::endl;
+	try {
+		Singleton<GameConfig>::instantiate("Silksong 2", 2, false);
+		std::cout << RED << "Double instantiation s hould have thrown, you should never see this" << RESET << std::endl;
+	} catch (const SingletonException &e) {
+		std::cout << GRN << "Correctly threw SingletonException: " << e.what() << RESET << std::endl;
+	} catch (const std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+
+	std::cout << YEL << "\n=== Access before instantiation test (should throw) ===" << RESET << std::endl;
+	try {
+		Singleton<NotInstantiated>::instance();
+		std::cout << RED << "Should have thrown for non-instantiated singleton, you shold never see this" << RESET << std::endl;
+	} catch (const std::runtime_error &e) {
+		std::cout << GRN << "Correctly threw runtime_error: " << e.what() << RESET << std::endl;
+	} catch (const std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+}
+
 int main(void) {
 	// Pool tests
 	std::cout << CYN << "====== POOL data structure tests ======" << RESET << std::endl;
@@ -358,6 +463,7 @@ int main(void) {
 	std::cout << CYN << "\n====== DESIGN PATTERNS tests ======" << RESET << std::endl;
 	testMemento();
 	testObserver();
+	testSingleton();
 	
 	std::cout << GRN << "\nAll tests completed!" << RESET << std::endl;
 	return 0;

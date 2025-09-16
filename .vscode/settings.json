@@ -58,6 +58,7 @@
 		"cinttypes": "cpp",
 		"typeinfo": "cpp",
 		"semaphore": "cpp",
-		"map": "cpp"
+		"map": "cpp",
+		"list": "cpp"
 	}
 }

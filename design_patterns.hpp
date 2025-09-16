@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:06:45 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/16 15:33:31 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:03:47 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 # include "memento.hpp"
 # include "observer.hpp"
+# include "singleton.hpp"
 
 #endif
