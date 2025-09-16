@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 14:31:58 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/10 16:29:17 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/16 11:19:08 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ class Pool {
 		};
 
 	private:
-		std::unique_ptr<std::byte[]> storage;  // Raw memory, not constructed objects
+		std::unique_ptr<std::byte[]> storage;
 		std::vector<size_t> free_indices;
 		size_t capacity;
 
@@ -59,7 +59,6 @@ class Pool {
 		}
 
 		inline void resize(const size_t& numberOfObjects) {
-			// Allocate raw memory, don't construct objects yet
 			storage = std::make_unique<std::byte[]>(numberOfObjects * sizeof(TType));
 			capacity = numberOfObjects;
 

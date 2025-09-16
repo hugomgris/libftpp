@@ -63,7 +63,7 @@ $(NAME): $(OBJS) Makefile
 	@echo "$(RED)Beginning to believe$(DEF_COLOR)"
 
 test:
-	$(CPP) $(FLAGS) $(NAME) main.cpp -o libftpp_test
+	$(CPP) $(FLAGS) $(NAME) tests.cpp -o libftpp_test
 
 complex_test:
 	$(CXX) $(FLAGS) complex_test.cpp -o complex_test
