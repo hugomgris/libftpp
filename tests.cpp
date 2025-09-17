@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:54:23 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/16 17:39:57 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/17 11:03:45 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ void testMultiDataBuffer() {
 }
 
 void testMemento() {
-	std::cout << YEL << "\n=== Testing MEMENTO pattern with GameCharacter inheriting class ===" << RESET << std::endl;
+	std::cout << MAG << "\n=== Testing MEMENTO pattern with GameCharacter inheriting class ===" << RESET << std::endl;
 
 	GameCharacter player("Hugo" ,100, 5);
 
@@ -325,7 +325,7 @@ void testObserver() {
 		[]         // Capture nothing
 	*/
 	
-	std::cout << YEL << "\n=== Testing Observer Pattern ===" << RESET << std::endl;	
+	std::cout << MAG << "\n=== Testing Observer Pattern ===" << RESET << std::endl;	
 
 	enum GameEvent { PlayerDied, LevelUp, ItemFound };
 	Observer<GameEvent> basicObserver;
@@ -373,7 +373,7 @@ void testObserver() {
 }
 
 void testSingleton() {
-	std::cout << YEL << "\n=== Testing Singleton Pattern ===" << RESET << std::endl;
+	std::cout << MAG << "\n=== Testing Singleton Pattern ===" << RESET << std::endl;
 
 	std::cout << YEL << "\n=== Basic Instantiation Test ===" << RESET << std::endl;
 	try {
@@ -446,6 +446,87 @@ void testSingleton() {
 	}
 }
 
+void testStateMachine() {
+	std::cout << MAG << "\n=== Testing StateMachine Pattern ===" << RESET << std::endl;
+
+	enum playerStates { Walking, Running, Jumping, Fighting, Resting};
+
+	StateMachine<playerStates> machine;
+	machine.addState(Walking);
+	machine.addState(Running);
+	machine.addState(Jumping);
+	machine.addState(Fighting);
+	//machine.addState(Walking);
+
+	std::cout << YEL << "\n=== Basic transition setup and execution test ===" << RESET << std::endl;
+	machine.addTransition(Walking, Running, [](){
+		std::cout << "Player started running!" << std::endl;
+	});
+	machine.addAction(Running, [](){
+		std::cout << "Running..." << std::endl;
+	});
+	machine.transitionTo(Running);
+	machine.update();
+
+	std::cout << YEL << "\n=== Error conditions test (should show a handful of throws) ===" << RESET << std::endl;
+	try {
+		machine.addTransition(Walking, Resting, [](){
+			std::cout << "Player stopped to rest!" << std::endl;
+		});
+	} catch (StateMachineException &e) {
+		std::cout << GRN << "Correctly threw StateMachineException: " << e.what() << RESET << std::endl;
+	} catch (std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+
+	try {
+		machine.addTransition(Resting, Walking, [](){
+			std::cout << "Player went back to walking!" << std::endl;
+		});
+	} catch (StateMachineException &e) {
+		std::cout << GRN << "Correctly threw StateMachineException: " << e.what() << RESET << std::endl;
+	} catch (std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+
+	try {
+		machine.transitionTo(Resting);
+	} catch (StateMachineException &e) {
+		std::cout << GRN << "Correctly threw StateMachineException: " << e.what() << RESET << std::endl;
+	} catch (std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+
+	try {
+		machine.transitionTo(Jumping);
+	} catch (StateMachineException &e) {
+		std::cout << GRN << "Correctly threw StateMachineException: " << e.what() << RESET << std::endl;
+	} catch (std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+
+	StateMachine<playerStates> machine2;
+	try {
+		machine2.transitionTo(Resting);
+	} catch (StateMachineException &e) {
+		std::cout << GRN << "Correctly threw StateMachineException: " << e.what() << RESET << std::endl;
+	} catch (std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+
+	machine.addTransition(Running, Walking, [](){
+		std::cout << "Player slowed down!" << std::endl;
+	});
+	try {
+		machine.transitionTo(Walking);
+		machine.update();
+	} catch (StateMachineException &e) {
+		std::cout << GRN << "Correctly threw StateMachineException: " << e.what() << RESET << std::endl;
+	} catch (std::exception &e) {
+		std::cout << RED << "Wrong exception type: " << e.what() << RESET << std::endl;
+	}
+}
+
 int main(void) {
 	// Pool tests
 	std::cout << CYN << "====== POOL data structure tests ======" << RESET << std::endl;
@@ -464,6 +545,7 @@ int main(void) {
 	testMemento();
 	testObserver();
 	testSingleton();
+	testStateMachine();
 	
 	std::cout << GRN << "\nAll tests completed!" << RESET << std::endl;
 	return 0;

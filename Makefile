@@ -65,11 +65,6 @@ $(NAME): $(OBJS) Makefile
 test:
 	$(CPP) $(FLAGS) $(NAME) tests.cpp -o libftpp_test
 
-complex_test:
-	$(CXX) $(FLAGS) complex_test.cpp -o complex_test
-	./complex_test
-	@$(RM) complex_test
-
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)
 	@echo "$(RED)Cleaned object files and dependencies$(DEF_COLOR)"

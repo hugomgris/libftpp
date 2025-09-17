@@ -59,6 +59,13 @@
 		"typeinfo": "cpp",
 		"semaphore": "cpp",
 		"map": "cpp",
-		"list": "cpp"
+		"list": "cpp",
+		"strstream": "cpp",
+		"bitset": "cpp",
+		"complex": "cpp",
+		"fstream": "cpp",
+		"cfenv": "cpp",
+		"typeindex": "cpp",
+		"variant": "cpp"
 	}
 }
