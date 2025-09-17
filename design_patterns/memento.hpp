@@ -6,14 +6,14 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 12:06:50 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/16 12:47:49 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/17 11:10:15 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MEMENTO_HPP
 # define MEMENTO_HPP
 
-# include "data_buffer.hpp"
+# include "../data_structures/data_structures.hpp"
 
 class Memento {
 	public:

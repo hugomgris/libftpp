@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftpp.hpp                                        :+:      :+:    :+:   */
+/*   data_structures.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/09 12:54:33 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/17 11:09:26 by hmunoz-g         ###   ########.fr       */
+/*   Created: 2025/09/17 11:08:44 by hmunoz-g          #+#    #+#             */
+/*   Updated: 2025/09/17 11:09:11 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPP_HPP
-# define LIBFTPP_HPP
+#ifndef DATA_STRUCTURES_HPP
+# define DATA_STRUCTURES_HPP
 
-# include <iostream>
-
-# include "./data_structures/data_structures.hpp"
-# include "./design_patterns/design_patterns.hpp"
+# include "data_buffer.hpp"
+# include "pool.hpp"
 
 #endif

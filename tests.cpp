@@ -6,11 +6,12 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:54:23 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/17 11:03:45 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/17 11:09:49 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftpp.hpp"
+#include "colors.h"
 #include <string>
 #include <vector>
 
