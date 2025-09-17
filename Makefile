@@ -62,8 +62,11 @@ $(NAME): $(OBJS) Makefile
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 	@echo "$(RED)Beginning to believe$(DEF_COLOR)"
 
-test:
-	$(CPP) $(FLAGS) $(NAME) tests.cpp -o libftpp_test
+test_unit_1:
+	$(CPP) $(FLAGS) $(NAME) tests.cpp -o libftpp_test_1
+
+test_unit_2:
+	$(CPP) $(FLAGS) $(NAME) ./IOStream/thread_safe_iostream.cpp -o ./libftpp_test_2
 
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)
@@ -71,7 +74,8 @@ clean:
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) libftpp_test
+	@$(RM) libftpp_test_1
+	@$(RM) libftpp_test_2
 	@echo "$(RED)Cleaned all binaries$(DEF_COLOR)"
 
 re: fclean all

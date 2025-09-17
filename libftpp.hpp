@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:54:33 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/17 11:09:26 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/17 12:32:35 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 
 # include "./data_structures/data_structures.hpp"
 # include "./design_patterns/design_patterns.hpp"
+# include "./IOStream/thread_safe_iostream.hpp"
 
 #endif
