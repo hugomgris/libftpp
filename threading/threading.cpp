@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:37:13 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/22 14:27:52 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/22 16:08:36 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ThreadSafeIOStream threadSafeCout;
 
 void testThreadSafeQueue() {
-	std::cout << YEL << "\n=ad== Testing thread safe queue ===" << RESET << std::endl;
+	std::cout << YEL << "\n=== Testing thread safe queue ===" << RESET << std::endl;
 
 	ThreadSafeQueue<int> safe_queue;
 	
@@ -88,7 +88,7 @@ void testThreadSafeQueue() {
 }
 
 void testThreadSafeQueueException() {
-	std::cout << YEL << "\n=ad== Testing thread safe queue exception (empty popping) ===" << RESET << std::endl;
+	std::cout << YEL << "\n=== Testing thread safe queue exception (empty popping) ===" << RESET << std::endl;
 
 	ThreadSafeQueue<int> safe_queue;
 	
@@ -110,7 +110,7 @@ void testThreadSafeQueueException() {
 }
 
 void testThreadWrapper() {
-	std::cout << YEL << "\n=ad== Testing thread wrapper ===" << RESET << std::endl;
+	std::cout << YEL << "\n=== Testing thread wrapper ===" << RESET << std::endl;
 
 	std::vector<Thread> threads;
 	int THREAD_NUMBER = 5;
@@ -136,12 +136,35 @@ void testThreadWrapper() {
 	std::cout << GRN << "Thread wrapper test completed!" << RESET << std::endl;
 }
 
+void testWorkerPool() {
+	std::cout << YEL << "\n=== Testing worker pool ===" << RESET << std::endl;
+
+	WorkerPool pool(4);
+
+	for (int i = 0; i < 20; ++i) {
+		pool.addJob([i](){
+			threadSafeCout << CYN << "Job " << i << " done!" << RESET << std::endl;
+		});
+		threadSafeCout << BLU << "Job " << i << " added to the pool!" << RESET << std::endl;
+	}
+
+	while (pool.getQueueSize() > 0) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		std::cout << "Queue size: " << pool.getQueueSize() << std::endl;
+	}
+	
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	
+	std::cout << GRN << "Worker pool test completed!" << RESET << std::endl;
+}
+
 int main(void) {
 	std::cout << CYN << "====== THREAD SAFE IOSTREAM tests ======" << RESET << std::endl;
 
 	testThreadSafeQueue();
 	testThreadSafeQueueException();
 	testThreadWrapper();
+	testWorkerPool();
 
 	std::cout << GRN << "\nAll tests completed successfully!" << std::endl;
 }
