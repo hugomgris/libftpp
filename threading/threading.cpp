@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:37:13 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/22 16:08:36 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:21:23 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,39 @@ void testWorkerPool() {
 	std::cout << GRN << "Worker pool test completed!" << RESET << std::endl;
 }
 
+void testPersistentWorker() {
+	std::cout << YEL << "\n=== Testing worker pool ===" << RESET << std::endl;
+
+	PersistentWorker persistentWorker;
+
+	persistentWorker.addTask("PrintLetters", [](){
+		threadSafeCout << "Printing letters: ABCDE" << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	});
+
+	persistentWorker.addTask("PrintNumbers", [](){
+		threadSafeCout << "Printing numbers: 12345" << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	});
+
+	persistentWorker.start();
+
+	std::this_thread::sleep_for(std::chrono::seconds(3));
+
+	persistentWorker.addTask("PrintSymbols", [](){
+		threadSafeCout << "Printing symbols: @*#*%" << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	});
+
+	std::this_thread::sleep_for(std::chrono::seconds(3));
+
+	persistentWorker.removeTask("PrintNumbers");
+	
+	std::this_thread::sleep_for(std::chrono::seconds(3));
+
+	persistentWorker.stop();
+}
+
 int main(void) {
 	std::cout << CYN << "====== THREAD SAFE IOSTREAM tests ======" << RESET << std::endl;
 
@@ -165,6 +198,7 @@ int main(void) {
 	testThreadSafeQueueException();
 	testThreadWrapper();
 	testWorkerPool();
+	testPersistentWorker();
 
 	std::cout << GRN << "\nAll tests completed successfully!" << std::endl;
 }
