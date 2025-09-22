@@ -6,13 +6,14 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:37:13 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/22 11:16:33 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/22 14:27:52 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <cstdlib>
 
 #include "threading.hpp"
 #include "../IOStream/thread_safe_iostream.hpp"
@@ -108,11 +109,39 @@ void testThreadSafeQueueException() {
 	}
 }
 
+void testThreadWrapper() {
+	std::cout << YEL << "\n=ad== Testing thread wrapper ===" << RESET << std::endl;
+
+	std::vector<Thread> threads;
+	int THREAD_NUMBER = 5;
+
+	for (int i = 0; i < THREAD_NUMBER; ++i) {
+		std::string threadName = "WORKER-" + std::to_string(i);
+
+		threads.emplace_back(threadName, [threadName](){
+			threadSafeCout << BLU << "Working on task " << rand() % 100 << RESET << std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			threadSafeCout << CYN << "Task completed!" << RESET << std::endl;
+		});
+	}
+
+	for (auto &thread : threads) {
+		thread.start();
+	}
+
+	for (auto &thread : threads) {
+		thread.stop();
+	}
+
+	std::cout << GRN << "Thread wrapper test completed!" << RESET << std::endl;
+}
+
 int main(void) {
 	std::cout << CYN << "====== THREAD SAFE IOSTREAM tests ======" << RESET << std::endl;
 
 	testThreadSafeQueue();
 	testThreadSafeQueueException();
+	testThreadWrapper();
 
 	std::cout << GRN << "\nAll tests completed successfully!" << std::endl;
 }
