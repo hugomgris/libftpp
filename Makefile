@@ -68,6 +68,9 @@ test_unit_1:
 test_unit_2:
 	$(CPP) $(FLAGS) $(NAME) ./IOStream/thread_safe_iostream.cpp -o ./libftpp_test_2
 
+test_unit_3:
+	$(CPP) $(FLAGS) $(NAME) ./threading/threading.cpp -o ./libftpp_test_3
+
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)
 	@echo "$(RED)Cleaned object files and dependencies$(DEF_COLOR)"
@@ -76,6 +79,7 @@ fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) libftpp_test_1
 	@$(RM) libftpp_test_2
+	@$(RM) libftpp_test_3
 	@echo "$(RED)Cleaned all binaries$(DEF_COLOR)"
 
 re: fclean all

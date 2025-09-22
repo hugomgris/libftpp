@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftpp.hpp                                        :+:      :+:    :+:   */
+/*   threading.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/09 12:54:33 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/22 09:09:12 by hmunoz-g         ###   ########.fr       */
+/*   Created: 2025/09/22 09:09:17 by hmunoz-g          #+#    #+#             */
+/*   Updated: 2025/09/22 09:09:48 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPP_HPP
-# define LIBFTPP_HPP
+#ifndef THREADING_HPP
+# define THREADING_HPP
 
-# include <iostream>
-
-# include "./data_structures/data_structures.hpp"
-# include "./design_patterns/design_patterns.hpp"
-# include "./IOStream/thread_safe_iostream.hpp"
-# include "./threading/threading.hpp"
+# include "thread_safe_queue.hpp"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 12:31:54 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/17 14:13:44 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:00:44 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <sstream>
 # include <mutex>
 # include <string>
-# include <sstream>
-# include <thread>
 
 class ThreadSafeIOStream {
 	private:

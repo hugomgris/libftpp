@@ -6,11 +6,12 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 12:48:39 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/17 14:46:20 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/22 10:42:12 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
+#include <thread>
 
 #include "thread_safe_iostream.hpp"
 #include "../colors.h"
