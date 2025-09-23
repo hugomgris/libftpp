@@ -83,6 +83,8 @@ $(NAME): $(OBJS) Makefile
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 	@echo "$(RED)I'm a classy programmer$(DEF_COLOR)"
 
+tests_all: test_unit_1 test_unit_2 test_unit_3 test_unit_4 test_unit_5 test_bonus
+
 test_unit_1:
 	$(CPP) $(FLAGS) basic_tests.cpp $(NAME) -o libftpp_test_1
 
