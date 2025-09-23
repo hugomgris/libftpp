@@ -43,7 +43,8 @@ SRC         := IOStream/thread_safe_iostream.cpp \
 			   threading/persistent_worker.cpp \
 			   network/message.cpp \
 			   network/client.cpp \
-			   network/server.cpp
+			   network/server.cpp \
+			   mathematics/ivector3.cpp
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPS        = $(addprefix $(DEP_DIR)/, $(SRC:.cpp=.d))
