@@ -10,6 +10,19 @@
 # include <arpa/inet.h>
 
 class Message {
+public:
+	enum Type {
+		UNKNOWN = 0,
+		CONNECT_REQUEST = 1,
+		CONNECT_RESPONSE = 2,
+		DISCONNECT = 3,
+		CHAT_MESSAGE = 4,
+		HEARTBEAT = 5,
+		ERROR_MSG = 6,
+		DATA_TRANSFER = 7,
+		USER_DEFINED = 100  // Starting point for user-defined message types
+	};
+
 private:
 	int _messageType;
 	std::vector<uint8_t> _data;

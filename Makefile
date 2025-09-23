@@ -40,7 +40,9 @@ DEP_DIR     = .dep
 SRC         := IOStream/thread_safe_iostream.cpp \
 			   threading/thread.cpp \
 			   threading/worker_pool.cpp \
-			   threading/persistent_worker.cpp
+			   threading/persistent_worker.cpp \
+			   network/message.cpp \
+			   network/client.cpp
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPS        = $(addprefix $(DEP_DIR)/, $(SRC:.cpp=.d))
@@ -77,7 +79,7 @@ test_unit_3:
 	$(CPP) $(FLAGS) ./threading/threading.cpp $(NAME) -o ./libftpp_test_3
 
 test_unit_4:
-	$(CPP) $(FLAGS) ./network/message.cpp ./network/network.cpp $(NAME) -o ./libftpp_test_4
+	$(CPP) $(FLAGS) ./network/network_tests.cpp $(NAME) -o ./libftpp_test_4
 
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)

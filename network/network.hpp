@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:09:45 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/23 11:14:38 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:53:54 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define NETWORK_HPP
 
 # include "message.hpp"
+# include "client.hpp"
 
 #endif
