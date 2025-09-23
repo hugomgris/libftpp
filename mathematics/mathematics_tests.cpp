@@ -6,12 +6,13 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:41:52 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/23 16:51:33 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/23 17:03:24 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ivector2.hpp"
 #include "ivector3.hpp"
+#include "random_2D_coordinate_generator.hpp"
 #include "../colors.h"
 
 void testBasicIVector2Operations() {
@@ -182,10 +183,72 @@ void testBasicIVector3Operations() {
 	}
 }
 
+void testRandom2DCoordinateGenerator() {
+	std::cout << MAG << "\n=== Testing Random2DCoordinateGenerator ===" << RESET << std::endl;
+
+	// Test basic functionality
+	Random2DCoordinateGenerator gen1(12345);
+	std::cout << "Generator 1 seed: " << gen1.seed() << std::endl;
+	
+	// Test deterministic behavior - same inputs should give same outputs
+	long long result1 = gen1(100, 200);
+	long long result2 = gen1(100, 200);
+	std::cout << "Same coordinates (100, 200) with same seed:" << std::endl;
+	std::cout << "First call: " << result1 << std::endl;
+	std::cout << "Second call: " << result2 << std::endl;
+	std::cout << "Are they equal? " << (result1 == result2 ? "YES" : "NO") << std::endl;
+	
+	// Test different coordinates give different results
+	long long result3 = gen1(101, 200);
+	long long result4 = gen1(100, 201);
+	std::cout << "\nDifferent coordinates:" << std::endl;
+	std::cout << "Coordinates (100, 200): " << result1 << std::endl;
+	std::cout << "Coordinates (101, 200): " << result3 << std::endl;
+	std::cout << "Coordinates (100, 201): " << result4 << std::endl;
+	
+	// Test different seeds give different results
+	Random2DCoordinateGenerator gen2(54321);
+	long long result5 = gen2(100, 200);
+	std::cout << "\nSame coordinates (100, 200) with different seed:" << std::endl;
+	std::cout << "Seed 12345: " << result1 << std::endl;
+	std::cout << "Seed 54321: " << result5 << std::endl;
+	std::cout << "Are they different? " << (result1 != result5 ? "YES" : "NO") << std::endl;
+	
+	// Test with negative coordinates
+	long long result6 = gen1(-50, -75);
+	long long result7 = gen1(-50, -75);
+	std::cout << "\nNegative coordinates (-50, -75):" << std::endl;
+	std::cout << "First call: " << result6 << std::endl;
+	std::cout << "Second call: " << result7 << std::endl;
+	std::cout << "Consistent? " << (result6 == result7 ? "YES" : "NO") << std::endl;
+	
+	// Test zero coordinates
+	long long result8 = gen1(0, 0);
+	std::cout << "\nZero coordinates (0, 0): " << result8 << std::endl;
+	
+	// Test large coordinates
+	long long result9 = gen1(1000000, 2000000);
+	std::cout << "Large coordinates (1000000, 2000000): " << result9 << std::endl;
+	
+	// Test distribution sample (show that nearby coordinates give different values)
+	std::cout << "\nDistribution sample (nearby coordinates):" << std::endl;
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 0; j < 5; ++j) {
+			long long val = gen1(i, j);
+			// Show last 4 digits for easier reading
+			std::cout << (val % 10000) << "\t";
+		}
+		std::cout << std::endl;
+	}
+	
+	std::cout << GRN << "Random2DCoordinateGenerator tests completed!" << RESET << std::endl;
+}
+
 int main(void) {
 	std::cout << CYN << "====== MATHEMATICS tests ======" << RESET << std::endl;
 	testBasicIVector2Operations();
 	testBasicIVector3Operations();
+	testRandom2DCoordinateGenerator();
 
 	std::cout << GRN << "\nAll mathematics tests completed!" << RESET << std::endl;
 }
