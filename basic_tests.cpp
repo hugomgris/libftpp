@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.cpp                                          :+:      :+:    :+:   */
+/*   basic_tests.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 12:54:23 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/17 12:52:05 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:37:28 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -529,7 +529,6 @@ void testStateMachine() {
 }
 
 int main(void) {
-	// Pool tests
 	std::cout << CYN << "====== POOL data structure tests ======" << RESET << std::endl;
 	testBasicPoolOperations();
 	testObjectLifetime();

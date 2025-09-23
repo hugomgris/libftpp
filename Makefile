@@ -82,6 +82,9 @@ test_unit_3:
 test_unit_4:
 	$(CPP) $(FLAGS) ./network/network_tests.cpp $(NAME) -o ./libftpp_test_4
 
+test_unit_5:
+	$(CPP) $(FLAGS) ./mathematics/mathematics_tests.cpp $(NAME) -o ./libftpp_test_5
+
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)
 	@echo "$(RED)Cleaned object files and dependencies$(DEF_COLOR)"
@@ -92,6 +95,7 @@ fclean: clean
 	@$(RM) libftpp_test_2
 	@$(RM) libftpp_test_3
 	@$(RM) libftpp_test_4
+	@$(RM) libftpp_test_5
 	@echo "$(RED)Cleaned all binaries$(DEF_COLOR)"
 
 re: fclean all

@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftpp.hpp                                        :+:      :+:    :+:   */
+/*   mathematics.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/09 12:54:33 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/23 15:14:45 by hmunoz-g         ###   ########.fr       */
+/*   Created: 2025/09/23 15:14:51 by hmunoz-g          #+#    #+#             */
+/*   Updated: 2025/09/23 15:15:10 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPP_HPP
-# define LIBFTPP_HPP
-
-# include <iostream>
-
-# include "./data_structures/data_structures.hpp"
-# include "./design_patterns/design_patterns.hpp"
-# include "./IOStream/thread_safe_iostream.hpp"
-# include "./threading/threading.hpp"
-# include "./network/network.hpp"
-# include "./mathematics/mathematics.hpp"
+#ifndef MATHEMATICS_HPP
+# define MATHEMATICS_HPP
 
 #endif
