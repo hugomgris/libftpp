@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:09:45 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/23 14:53:54 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:07:53 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 # include "message.hpp"
 # include "client.hpp"
+# include "server.hpp"
 
 #endif
