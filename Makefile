@@ -45,7 +45,8 @@ SRC         := IOStream/thread_safe_iostream.cpp \
 			   network/client.cpp \
 			   network/server.cpp \
 			   mathematics/ivector3.cpp \
-			   mathematics/random_2D_coordinate_generator.cpp
+			   mathematics/random_2D_coordinate_generator.cpp \
+			   mathematics/perlin_noise_2D.cpp
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPS        = $(addprefix $(DEP_DIR)/, $(SRC:.cpp=.d))
