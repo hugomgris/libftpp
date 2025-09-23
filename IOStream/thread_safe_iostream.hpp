@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 12:31:54 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/22 11:00:44 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/23 14:06:41 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ class ThreadSafeIOStream {
 		static thread_local std::ostringstream buffer;
 	
 	public:
-		void setPrefix(const std::string &newPrefix) {
-			prefix = newPrefix;
-		}
+		void setPrefix(const std::string &newPrefix);
 
 		template<typename T>
 		ThreadSafeIOStream &operator<<(const T &value) {
@@ -36,39 +34,27 @@ class ThreadSafeIOStream {
 		}
 
 		// Overload of std::endl to manage mutexing and flushing
-		ThreadSafeIOStream &operator<<(std::ostream &(*manip)(std::ostream&)) {
-			if (manip == static_cast<std::ostream &(*)(std::ostream&)>(std::endl)) {
-				flushBuffer();
-			} else {
-				buffer << manip;
-			}
-			return (*this);
-		}
+		ThreadSafeIOStream &operator<<(std::ostream &(*manip)(std::ostream&));
 
 		template<typename T>
-		void prompt(const std::string &question, T &dest){
-			{
-				std::lock_guard<std::mutex> loc(output_mutex);
-				std::cout << prefix << question;
-				std::cout.flush();
-			}
-			std::cin >> dest;
-		}
+		void prompt(const std::string &question, T &dest);
 
 	private:
-		void flushBuffer() {
-			std::lock_guard<std::mutex> lock(output_mutex);
-			std::cout << prefix << buffer.str() << std::endl;
-			buffer.str("");
-			buffer.clear();
-		}
+		void flushBuffer();
 };
 
-std::mutex ThreadSafeIOStream::output_mutex;
-thread_local std::string ThreadSafeIOStream::prefix = "";
-thread_local std::ostringstream ThreadSafeIOStream::buffer;
+// Template method implementations
+template<typename T>
+void ThreadSafeIOStream::prompt(const std::string &question, T &dest){
+	{
+		std::lock_guard<std::mutex> loc(output_mutex);
+		std::cout << prefix << question;
+		std::cout.flush();
+	}
+	std::cin >> dest;
+}
 
-// Global instance (required by subject)
+// Global instance required by subject
 extern ThreadSafeIOStream threadSafeCout;
 
 #endif

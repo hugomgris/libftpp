@@ -37,7 +37,10 @@ DEP_DIR     = .dep
 
 # -=-=-=-=-    FILES -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-SRC         := 
+SRC         := IOStream/thread_safe_iostream.cpp \
+			   threading/thread.cpp \
+			   threading/worker_pool.cpp \
+			   threading/persistent_worker.cpp
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPS        = $(addprefix $(DEP_DIR)/, $(SRC:.cpp=.d))
@@ -54,25 +57,27 @@ directories:
 
 $(OBJ_DIR)/%.o: %.cpp 
 	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $(DEP_DIR)/$*.d)
 	$(CPP) $(FLAGS) $(DEPFLAGS) -c $< -o $@ -MF $(DEP_DIR)/$*.d
 
 $(NAME): $(OBJS) Makefile
 	@echo "$(GREEN)Linking $(NAME)!$(DEF_COLOR)"
 	ar rcs $(NAME) $(OBJS)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
-	@echo "$(RED)Beginning to believe$(DEF_COLOR)"
+	@echo "$(RED)I'm a classy programmer$(DEF_COLOR)"
 
 test_unit_1:
-	$(CPP) $(FLAGS) $(NAME) tests.cpp -o libftpp_test_1
+	$(CPP) $(FLAGS) basic_tests.cpp $(NAME) -o libftpp_test_1
 
 test_unit_2:
-	$(CPP) $(FLAGS) $(NAME) ./IOStream/thread_safe_iostream.cpp -o ./libftpp_test_2
+	$(CPP) $(FLAGS) ./IOStream/thread_safe_iostream_tests.cpp $(NAME) -o ./libftpp_test_2
 
 test_unit_3:
-	$(CPP) $(FLAGS) $(NAME) ./threading/threading.cpp -o ./libftpp_test_3
+	$(CPP) $(FLAGS) ./threading/threading.cpp $(NAME) -o ./libftpp_test_3
 
 test_unit_4:
-	$(CPP) $(FLAGS) $(NAME) ./network/message.cpp ./network/network.cpp -o ./libftpp_test_4
+	$(CPP) $(FLAGS) ./network/message.cpp ./network/network.cpp $(NAME) -o ./libftpp_test_4
 
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)

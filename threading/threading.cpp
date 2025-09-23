@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:37:13 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/22 17:21:23 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:57:44 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "../IOStream/thread_safe_iostream.hpp"
 #include "../colors.h"
 
-ThreadSafeIOStream threadSafeCout;
+extern ThreadSafeIOStream threadSafeCout;
 
 void testThreadSafeQueue() {
 	std::cout << YEL << "\n=== Testing thread safe queue ===" << RESET << std::endl;
