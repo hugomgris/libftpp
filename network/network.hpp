@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftpp.hpp                                        :+:      :+:    :+:   */
+/*   network.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/09 12:54:33 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/23 11:10:33 by hmunoz-g         ###   ########.fr       */
+/*   Created: 2025/09/23 11:09:45 by hmunoz-g          #+#    #+#             */
+/*   Updated: 2025/09/23 11:14:38 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPP_HPP
-# define LIBFTPP_HPP
+#ifndef NETWORK_HPP
+# define NETWORK_HPP
 
-# include <iostream>
-
-# include "./data_structures/data_structures.hpp"
-# include "./design_patterns/design_patterns.hpp"
-# include "./IOStream/thread_safe_iostream.hpp"
-# include "./threading/threading.hpp"
-# include "./network/network.hpp"
+# include "message.hpp"
 
 #endif

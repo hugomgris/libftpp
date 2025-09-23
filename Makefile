@@ -71,6 +71,9 @@ test_unit_2:
 test_unit_3:
 	$(CPP) $(FLAGS) $(NAME) ./threading/threading.cpp -o ./libftpp_test_3
 
+test_unit_4:
+	$(CPP) $(FLAGS) $(NAME) ./network/message.cpp ./network/network.cpp -o ./libftpp_test_4
+
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)
 	@echo "$(RED)Cleaned object files and dependencies$(DEF_COLOR)"
@@ -80,6 +83,7 @@ fclean: clean
 	@$(RM) libftpp_test_1
 	@$(RM) libftpp_test_2
 	@$(RM) libftpp_test_3
+	@$(RM) libftpp_test_4
 	@echo "$(RED)Cleaned all binaries$(DEF_COLOR)"
 
 re: fclean all
