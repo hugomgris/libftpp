@@ -48,8 +48,18 @@ SRC         := IOStream/thread_safe_iostream.cpp \
 			   mathematics/random_2D_coordinate_generator.cpp \
 			   mathematics/perlin_noise_2D.cpp
 
-OBJS        = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
-DEPS        = $(addprefix $(DEP_DIR)/, $(SRC:.cpp=.d))
+# Bonus sources
+BONUS_SRC   := bonus/timer_bonus.cpp \
+			   bonus/chronometer_bonus.cpp \
+			   bonus/widget_bonus.cpp \
+			   bonus/application_bonus.cpp \
+			   bonus/observable_value_bonus.cpp \
+			   bonus/logger_bonus.cpp
+
+ALL_SRC     = $(SRC) $(BONUS_SRC)
+
+OBJS        = $(addprefix $(OBJ_DIR)/, $(ALL_SRC:.cpp=.o))
+DEPS        = $(addprefix $(DEP_DIR)/, $(ALL_SRC:.cpp=.d))
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
@@ -88,6 +98,9 @@ test_unit_4:
 test_unit_5:
 	$(CPP) $(FLAGS) ./mathematics/mathematics_tests.cpp $(NAME) -o ./libftpp_test_5
 
+test_bonus:
+	$(CPP) $(FLAGS) ./bonus/bonus_tests.cpp $(NAME) -o ./libftpp_test_bonus
+
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)
 	@echo "$(RED)Cleaned object files and dependencies$(DEF_COLOR)"
@@ -99,6 +112,7 @@ fclean: clean
 	@$(RM) libftpp_test_3
 	@$(RM) libftpp_test_4
 	@$(RM) libftpp_test_5
+	@$(RM) libftpp_test_bonus
 	@echo "$(RED)Cleaned all binaries$(DEF_COLOR)"
 
 re: fclean all
