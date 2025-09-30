@@ -6,24 +6,20 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:20:00 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/23 17:36:47 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/30 09:07:42 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BONUS_HPP
 # define BONUS_HPP
 
-/**
- * @file bonus.hpp
- * @brief Main header for libftpp bonus classes
- * 
- * This header includes all bonus functionality for the libftpp library:
- * - Timer: Duration tracking and timeout functionality
- * - Chronometer: Precise time measurement with lap support
- * - Application & Widget: Framework for creating interactive applications
- * - ObservableValue: Value change notification system
- * - Logger: Comprehensive logging with multiple outputs and levels
- */
+/*
+Timer: Duration tracking and timeout functionality
+Chronometer: Precise time measurement with lap support
+Application & Widget: Framework for creating interactive applications
+ObservableValue: Value change notification system
+Logger: Comprehensive logging with multiple outputs and levels
+*/
 
 // Bonus class includes
 #include "timer_bonus.hpp"

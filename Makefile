@@ -83,7 +83,7 @@ $(NAME): $(OBJS) Makefile
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 	@echo "$(RED)I'm a classy programmer$(DEF_COLOR)"
 
-tests_all: test_unit_1 test_unit_2 test_unit_3 test_unit_4 test_unit_5 test_bonus
+test_all: test_unit_1 test_unit_2 test_unit_3 test_unit_4 test_unit_5 test_bonus
 
 test_unit_1:
 	$(CPP) $(FLAGS) basic_tests.cpp $(NAME) -o libftpp_test_1
@@ -101,7 +101,7 @@ test_unit_5:
 	$(CPP) $(FLAGS) ./mathematics/mathematics_tests.cpp $(NAME) -o ./libftpp_test_5
 
 test_bonus:
-	$(CPP) $(FLAGS) ./bonus/bonus_tests.cpp $(NAME) -o ./libftpp_test_bonus
+	$(CPP) $(FLAGS) ./bonus/tests_bonus.cpp $(NAME) -o ./libftpp_test_bonus
 
 clean:
 	@$(RM) $(OBJ_DIR) $(DEP_DIR)
