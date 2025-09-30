@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:20:00 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/30 09:25:04 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/30 09:38:02 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ public:
 	
 	virtual void render() override;
 	virtual void update(float deltaTime) override;
+	virtual void onClick(int x, int y) override;
 };
 
 #endif

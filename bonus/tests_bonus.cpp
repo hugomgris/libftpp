@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:20:00 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/30 09:26:19 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/30 09:38:02 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,11 +269,25 @@ void testApplicationAndWidget() {
 	
 	std::cout << MAG << "\n=== Test widget events ===" << RESET << std::endl;
 
-	std::cout << "Simulating click at (50, 70) - should hit Button1:" << std::endl;
+	std::cout << "Button1 bounds: (" << foundButton->getX() << "," << foundButton->getY() 
+			<< ") to (" << (foundButton->getX() + foundButton->getWidth()) << "," 
+			<< (foundButton->getY() + foundButton->getHeight()) << ")" << std::endl;
+	
+	Widget* foundButton2 = mainPanel->findChild("Button2");
+	if (foundButton2) {
+		std::cout << "Button2 bounds: (" << foundButton2->getX() << "," << foundButton2->getY() 
+				<< ") to (" << (foundButton2->getX() + foundButton2->getWidth()) << "," 
+				<< (foundButton2->getY() + foundButton2->getHeight()) << ")" << std::endl;
+	}
+
+	std::cout << "\nSimulating click at (50, 70) - should hit Button1:" << std::endl;
 	mainPanel->onClick(50, 70);
 	
-	std::cout << "Simulating click at (150, 70) - should hit Button2:" << std::endl;
+	std::cout << "\nSimulating click at (150, 70) - should hit Button2:" << std::endl;
 	mainPanel->onClick(150, 70);
+	
+	std::cout << "\nSimulating click at (5, 5) - should hit panel only:" << std::endl;
+	mainPanel->onClick(5, 5);
 	
 	std::cout << MAG << "\n=== Test sample application ===" << RESET << std::endl;
 	std::cout << "Creating and running sample application (will auto-quit after 5 seconds):" << std::endl;

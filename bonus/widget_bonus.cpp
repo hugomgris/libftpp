@@ -6,7 +6,7 @@
 /*   By: hmunoz-g <hmunoz-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:20:00 by hmunoz-g          #+#    #+#             */
-/*   Updated: 2025/09/30 09:24:07 by hmunoz-g         ###   ########.fr       */
+/*   Updated: 2025/09/30 09:38:38 by hmunoz-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ void Widget::onShow() {}
 void Widget::onHide() {}
 void Widget::onEnable() {}
 void Widget::onDisable() {}
-void Widget::onClick(int, int) {} // Unused parameters
-void Widget::onKeyPress(char) {} // Unused parameter
+void Widget::onClick(int, int) {}
+void Widget::onKeyPress(char) {}
 void Widget::onFocus() {}
 void Widget::onBlur() {}
 
@@ -296,4 +296,23 @@ void Panel::render() {
 
 void Panel::update(float deltaTime) {
 	Widget::update(deltaTime);
+}
+
+void Panel::onClick(int x, int y) {
+	// Check if click is within panel bounds
+	if (!contains(x, y)) {
+		return;
+	}
+	
+	// Try to delegate to children (reverse order for proper z-ordering)
+	for (auto it = _children.rbegin(); it != _children.rend(); ++it) {
+		Widget* child = it->get();
+		if (child && child->isVisible() && child->isEnabled() && child->contains(x, y)) {
+			std::cout << "  → Delegating click to child: " << child->getName() << std::endl;
+			child->onClick(x, y);
+			return;
+		}
+	}
+	
+	std::cout << "  → Click handled by panel (no child widgets at this position)" << std::endl;
 }
